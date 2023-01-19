@@ -4,86 +4,46 @@ Here is another implementation for a ReadMoreComponent for React.
 ```
 
 const AnotherReadMoreComponent = ({ text, cutOff }) => {
+  const [showReadMore, setShowReadMore] = useState(true);
+  const [displayMore, setDisplayMore] = useState(true);
+  const getText = () => {
+    if (text?.length <= cutOff) {
+      setDisplayMore(false);
+      return text;
+    } else {
+      return text.slice(0, cutOff);
+    }
+  };
+  useEffect(() => {
+    getText();
+  }, []);
+  return (
+    <div>
+      <p
+        style={{
+          textAlign: "justify"
+        }}
+      >
+        {showReadMore ? getText() : text}
 
-const [showReadMore, setShowReadMore] = useState(true);
+        {displayMore && (
+          <span
+            style={{
+              display: "inline",
 
-const [displayMore, setDisplayMore] = useState(true);
-
-const getText = () => {
-
-if (text?.length <= cutOff) {
-setDisplayMore(false);
-
-return text;
-
-} else {
-
-return text.slice(0, cutOff);
-
-}
-
+              cursor: "pointer"
+            }}
+            onClick={() => {
+              setShowReadMore(!showReadMore);
+            }}
+          >
+            {showReadMore ? "...more" : "...less"}
+          </span>
+        )}
+      </p>
+    </div>
+  );
 };
-
-useEffect(() => {
-
-getText();
-
-}, []);
-
-return (
-
-<div>
-
-<p
-
-style={{
-
-textAlign: "justify"
-
-}}
-
->
-
-{showReadMore ? getText() : text}
-
-  
-
-{displayMore && (
-
-<span
-
-style={{
-
-display: "inline",
-
-  
-
-cursor: "pointer"
-
-}}
-
-onClick={() => {
-
-setShowReadMore(!showReadMore);
-
-}}
-
->
-
-{showReadMore ? "...more" : "...less"}
-
-</span>
-
-)}
-
-</p>
-
-</div>
-
-);
-
-};
-
 
 ```
 
